@@ -1,18 +1,29 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
 import ResultCountry from "@/components/ResultCountry";
+import { useCountries } from "@/context/CountriesContext";
 
 export default function Result() {
+  const { countries } = useCountries(); // Access countries from the context
+  const navigate = useRouter();
+  console.log(countries);
+  const navigateToHome = () => {
+    navigate.push("/");
+  };
   return (
     <div>
       <Head>
         <title>Geo Country</title>
       </Head>
       <Layout>
-        <button className="mt-[4rem] bg-white btn btn-xs sm:btn-sm md:btn-md lg:btn-[0.5rem] shadow">
+        <button
+          onClick={navigateToHome}
+          className="mt-[4rem] bg-white btn btn-xs sm:btn-sm md:btn-md lg:btn-[0.5rem] shadow"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -28,7 +39,9 @@ export default function Result() {
           </svg>
           Back
         </button>
-        <ResultCountry />
+
+        {/* Display shared state */}
+        <ResultCountry country={countries} />
       </Layout>
     </div>
   );
