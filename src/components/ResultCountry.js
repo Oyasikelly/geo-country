@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import BorderCountries from "./BorderCountries";
 
 export default function ResultCountry({ country }) {
-  const [searchedCont, setSearchedCont] = useState();
   const [testCountry, notUsefull, ...others] = country;
   console.log(testCountry);
   const {
@@ -34,7 +33,7 @@ export default function ResultCountry({ country }) {
       <div className="hero-content gap-[6rem] flex-col lg:flex-row w-auto">
         <img
           src={`${flags.png}`}
-          alt="Shoes"
+          alt="country flag"
           className="w-1/2 rounded-lg shadow-2xl"
         />
         <div className="w-1/2">

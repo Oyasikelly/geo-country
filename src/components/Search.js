@@ -13,7 +13,6 @@ export default function Search() {
   useEffect(() => {
     async function fetchCountryRegions(region) {
       const apiUrl = `https://restcountries.com/v3.1/region/${region}`;
-
       try {
         const response = await fetch(apiUrl);
 
@@ -35,7 +34,6 @@ export default function Search() {
         console.error("Error fetching country regions:", error);
       }
     }
-
     fetchCountryRegions(region);
   }, [region, setCountries]);
 
