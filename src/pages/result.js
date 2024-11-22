@@ -5,24 +5,37 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
 import ResultCountry from "@/components/ResultCountry";
-import { useCountries } from "@/context/CountriesContext";
+// import { useCountries } from "@/context/CountriesContext";
 
 export default function Result() {
-  const { countries } = useCountries(); // Access countries from the context
-  const navigate = useRouter();
-  console.log(countries);
+  const router = useRouter();
+  console.log(router.query);
+  const { setTheme, theme, countryData } = router.query;
+  const parsedCountryData = countryData ? JSON.parse(countryData) : null;
+  const [theme2, setTheme2] = useState(theme);
+  // const { countries } = useCountries(); // Access countries from the context
+
+  // console.log(countries);
+  console.log(parsedCountryData);
+  console.log(theme);
   const navigateToHome = () => {
-    navigate.push("/");
+    router.push("/");
   };
   return (
-    <div>
+    <div
+      className={`${
+        theme2 ? "bg-gray-800 text-white" : "bg-white text-black"
+      } `}
+    >
       <Head>
         <title>Geo Country</title>
       </Head>
-      <Layout>
+      <Layout theme={theme2} setTheme={setTheme2}>
         <button
           onClick={navigateToHome}
-          className="mt-[4rem] bg-white btn btn-xs sm:btn-sm md:btn-md lg:btn-[0.5rem] shadow"
+          className={`${
+            theme2 ? "bg-gray-800 text-white" : "bg-white text-black"
+          } mt-[4rem] border-none btn btn-xs sm:btn-sm md:btn-md lg:btn-[0.5rem] shadow self-start`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +54,11 @@ export default function Result() {
         </button>
 
         {/* Display shared state */}
-        <ResultCountry country={countries} />
+        <ResultCountry
+          theme2={theme2}
+          setTheme2={setTheme2}
+          country={parsedCountryData}
+        />
       </Layout>
     </div>
   );

@@ -14,3 +14,7 @@ body {
 /* .hoverLinks {
     @apply hover:text-secondary transition-all duration-500;
   } */
+.changeMode {
+  background-color: rgb(13, 13, 15);
+  color: whitesmoke;
+}

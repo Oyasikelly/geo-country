@@ -1,10 +1,12 @@
 /** @format */
 
-import React, { Children } from "react";
-
-export default function BorderCountries({ children }) {
+export default function BorderCountries({ theme2, children }) {
   return (
-    <button className="text-gray-500 btn bg-white border border-4 ml-4">
+    <button
+      className={`${
+        theme2 ? "bg-gray-800 text-white" : "bg-white text-black"
+      } text-gray-500 btn border-none ml-4`}
+    >
       {children}
     </button>
   );

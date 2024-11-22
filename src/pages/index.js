@@ -8,30 +8,43 @@ import Search from "@/components/Search";
 import Countries from "@/components/Countries";
 import { useCountries } from "@/context/CountriesContext";
 
-export default function Home() {
+export default function Home({ theme, setTheme }) {
   const { countries } = useCountries(); // Access countries from the context
 
   const router = useRouter();
 
   function navigateToResults() {
-    router.push(`/result?countries=${countries}`); // Pass countries as a query parameter
+    router.push({
+      pathname: "/result",
+      query: { setTheme, theme, countryData: JSON.stringify(countries) },
+    });
   }
 
-  const [isLoading, setIsLoading] = useState(false);
-
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   return (
-    <div>
+    <div
+      className={`${theme ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+    >
       <Head>
         <title>Geo Country</title>
       </Head>
-      <Search isLoading={isLoading} setIsLoading={setIsLoading} />
-      <Layout>
+      <Search
+        error={error}
+        setError={setError}
+        loading={loading}
+        setLoading={setLoading}
+        theme={theme}
+      />
+      <Layout theme={theme} setTheme={setTheme}>
         {/* Pass countries to a child component */}
-        {!isLoading && <p>Loading Country...</p>}
-        {isLoading && (
+        {loading && <p>Loading Country...</p>}
+        {error && <p>Error: {error}</p>}
+        {!loading && !error && (
           <Countries
             countries={countries}
             navigateToResults={navigateToResults}
+            theme={theme}
           />
         )}
       </Layout>

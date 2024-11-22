@@ -1,16 +1,28 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 
-export default function Header() {
+export default function Header({ theme, setTheme }) {
+  function handleModes() {
+    setTheme(() => !theme);
+  }
   return (
-    <header className="z-1 bg-white shadow-md fixed top-0 right-0 left-0">
+    <header
+      className={`${
+        theme ? "bg-gray-800 text-white" : "bg-white text-black"
+      } z-1  shadow-md fixed top-0 right-0 left-0`}
+    >
       <div className="layout navbar ">
         <div className="flex-1">
           <p className="text-xl font-bold">Where in the world?</p>
         </div>
         <div className="flex-none">
-          <button className="btn hover:none bg-white border border-none">
+          <button
+            onChange={handleModes}
+            className={`${
+              theme ? "bg-gray-800 text-white" : "bg-white text-black"
+            } btn   border-none`}
+          >
             <label className="swap swap-rotate text-xs">
               {/* this hidden checkbox controls the state */}
               <input

@@ -3,10 +3,11 @@
 import React, { useState } from "react";
 import BorderCountries from "./BorderCountries";
 
-export default function ResultCountry({ country }) {
+export default function ResultCountry({ theme2, country }) {
   const [testCountry, notUsefull, ...others] = country;
   console.log(testCountry);
   const {
+    borders,
     flags,
     name,
     population,
@@ -18,7 +19,7 @@ export default function ResultCountry({ country }) {
     languages,
   } = testCountry;
   // console.log(
-  //   name.nativeName.eng.common,
+  //   Object.values(name.nativeName)[0]?.common,
   //   population,
   //   region,
   //   subregion,
@@ -27,23 +28,26 @@ export default function ResultCountry({ country }) {
   //   currencies,
   //   languages.eng
   // );
-
   return (
-    <div className="hero  pb-[10rem]">
+    <div
+      className={`${
+        theme2 ? "bg-gray-800 text-white" : "bg-white text-black"
+      } hero  pb-[10rem] overflow-hidden`}
+    >
       <div className="hero-content gap-[6rem] flex-col lg:flex-row w-auto">
         <img
-          src={`${flags.png}`}
+          src={`${Object.values(flags)[0]}`}
           alt="country flag"
           className="w-1/2 rounded-lg shadow-2xl"
         />
         <div className="w-1/2">
           <h1 className="text-3xl font-bold">{name.common}</h1>
-          <div className="py-6 flex justify-between">
+          <div className="py-6 flex justify-between gap-10 w-full">
             <ul>
               <li>
                 <span className="font-medium mr-2">Native Name:</span>
                 <span className="text-gray-500">
-                  {name.nativeName.eng.common}
+                  {Object.values(name.nativeName)[0]?.common}
                 </span>
               </li>
               <li>
@@ -76,16 +80,21 @@ export default function ResultCountry({ country }) {
               </li>
               <li>
                 <span className="font-medium mr-2 ">Languages:</span>
-                <span className="text-gray-500">{languages.eng}</span>
+                <span className="text-gray-500">
+                  {Object.values(languages)
+                    .map((entry) => entry)
+                    .join(",")}
+                  {/* {Object.keys(languages)[0]} */}
+                </span>
               </li>
             </ul>
           </div>
           <div className="flex items-center">
             <span className="font-medium">Border Countries:</span>
             <div>
-              <BorderCountries>country1</BorderCountries>
-              <BorderCountries>country2</BorderCountries>
-              <BorderCountries>country3</BorderCountries>
+              {borders.map((border, i) => (
+                <BorderCountries theme2={theme2}>{border}</BorderCountries>
+              ))}
             </div>
           </div>
         </div>

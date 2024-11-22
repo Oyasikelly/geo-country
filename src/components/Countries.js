@@ -1,17 +1,27 @@
 /** @format */
 
-export default function Countries({ navigateToResults, countries }) {
+export default function Countries({ theme, navigateToResults, countries }) {
   return (
     <div className=" w-1/4">
-      <CountryCard
-        navigateToResults={navigateToResults}
-        loadedCountry={countries}
-      />
+      {countries && countries.length === 0 && (
+        <p className="text-gray-300">Search country by region </p>
+      )}
+      {countries && countries.length !== 0 && (
+        <CountryCard
+          navigateToResults={navigateToResults}
+          loadedCountry={countries}
+          theme={theme}
+        />
+      )}
     </div>
   );
 }
 
-function CountryCard({ navigateToResults, loadedCountry }) {
+function CountryCard({ theme, navigateToResults, loadedCountry }) {
+  // function navigateToResults() {
+  //   router.push(`/result?countries=${loadedCountry}`); // Pass countries as a query parameter
+  // }
+
   const [testCountry, notUsefull, ...others] = loadedCountry;
   console.log(loadedCountry);
   const {
@@ -28,24 +38,26 @@ function CountryCard({ navigateToResults, loadedCountry }) {
   return (
     <div
       onClick={navigateToResults}
-      className="card bg-base-100 w-auto shadow-xl"
+      className={`${
+        theme ? "bg-gray-600 text-white" : "bg-base-100 text-black"
+      } card w-auto shadow-xl`}
     >
       <figure>
-        <img src={`${flags.png}`} alt="country flag" />
+        <img src={`${Object.values(flags)[0]}`} alt="country flag" />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{name.common}</h2>
         <p>
-          <span>Population:</span>
-          <span>{population}</span>
+          <span>Population: </span>
+          <span className="text-gray-400">{population}</span>
         </p>
         <p>
-          <span>Region:</span>
-          <span>{region}</span>
+          <span>Region: </span>
+          <span className="text-gray-400">{region}</span>
         </p>
         <p>
-          <span>Capital:</span>
-          <span>{capital[0]}</span>
+          <span>Capital: </span>
+          <span className="text-gray-400">{capital[0]}</span>
         </p>
       </div>
     </div>
