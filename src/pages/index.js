@@ -10,8 +10,10 @@ import { useCountries } from "@/context/CountriesContext";
 
 export default function Home({ theme, setTheme }) {
   const { countries } = useCountries(); // Access countries from the context
-
   const router = useRouter();
+
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   function navigateToResults() {
     router.push({
@@ -20,15 +22,20 @@ export default function Home({ theme, setTheme }) {
     });
   }
 
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
   return (
     <div
-      className={`${theme ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+      className={`${
+        theme ? "bg-gray-800 text-white" : "bg-white text-black"
+      } min-h-screen flex flex-col`}
     >
+      {/* Head Section for Metadata */}
       <Head>
         <title>Geo Country</title>
+        <meta name="description" content="Explore countries around the world" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
+
+      {/* Search Section */}
       <Search
         error={error}
         setError={setError}
@@ -36,10 +43,24 @@ export default function Home({ theme, setTheme }) {
         setLoading={setLoading}
         theme={theme}
       />
+
+      {/* Main Layout Section */}
       <Layout theme={theme} setTheme={setTheme}>
-        {/* Pass countries to a child component */}
-        {loading && <p>Loading Country...</p>}
-        {error && <p>Error: {error}</p>}
+        {/* Conditional Rendering for Data State */}
+        {loading && (
+          <div className="flex justify-center items-center py-6">
+            <p className="text-lg font-medium animate-pulse">
+              Loading Country Data...
+            </p>
+          </div>
+        )}
+        {error && (
+          <div className="flex justify-center items-center py-6">
+            <p className="text-lg font-medium text-red-500">
+              Error: {error}. Please try again.
+            </p>
+          </div>
+        )}
         {!loading && !error && (
           <Countries
             countries={countries}

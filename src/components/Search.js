@@ -6,11 +6,9 @@ import { useCountries } from "@/context/CountriesContext";
 export const REGIONS = ["Africa", "America", "Asia", "Europe", "Oceania"];
 
 export default function Search({ setLoading, setError, theme }) {
-  const [region, setRegion] = useState("Africa");
-  const { setCountries } = useCountries(); // Access setCountries from the context
+  const { setCountries } = useCountries();
   const [inputCountry, setInputCountry] = useState("");
 
-  // useEffect(() => {
   async function fetchCountryRegions(region) {
     const apiUrl = `https://restcountries.com/v3.1/region/${region}`;
 
@@ -18,7 +16,6 @@ export default function Search({ setLoading, setError, theme }) {
     setError(null);
     try {
       const response = await fetch(apiUrl);
-
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -29,65 +26,65 @@ export default function Search({ setLoading, setError, theme }) {
           country.altSpellings.includes(inputCountry) ||
           country.name.common === inputCountry
       );
-      // console.log(countries);
-      console.log(country);
 
-      setCountries(country); // Save countries to the shared context
+      setCountries(country);
     } catch (err) {
       setError(err.message);
-      // console.error("Error fetching country regions:", error);
     } finally {
       setLoading(false);
     }
   }
-  // fetchCountryRegions(region);
-  // }, [region, setCountries]);
 
   function handleRegion(region) {
-    // setRegion(region);
     fetchCountryRegions(region);
   }
+
   function handleInput(e) {
     setInputCountry(() => e.target.value);
   }
+
   return (
-    <div className="layout pt-[7rem] flex flex-row justify-between">
+    <div
+      className="layout pt-24 flex flex-col sm:flex-row 
+                 sm:justify-between gap-4 px-4 sm:px-6 lg:px-8"
+    >
+      {/* Search Input */}
       <label
         className={`${
           theme ? "bg-gray-600 text-white" : "bg-white text-black"
-        } input input-bordered flex items-center gap-2 shadow-md`}
+        } input input-bordered flex items-center gap-2 shadow-md w-full sm:w-auto`}
       >
         <input
           type="text"
-          className="grow"
+          className="grow bg-transparent outline-none"
           placeholder="Search for a country..."
           value={inputCountry}
           onChange={handleInput}
         />
       </label>
+
+      {/* Region Filter */}
       <ul
         className={`${
           theme ? "bg-gray-600 text-white" : "bg-base-100 text-black"
-        }  menu  xl:menu-horizontal rounded shadow-md h-auto`}
+        } menu rounded shadow-md h-auto w-full sm:w-auto`}
       >
         <li>
           <details close>
-            <summary>Filter by Region</summary>
+            <summary className="cursor-pointer">Filter by Region</summary>
             <ul
               className={`${
                 theme ? "bg-gray-600 text-white" : "bg-base-100 text-black"
-              }  rounded w-full z-10`}
+              } rounded w-full z-10`}
             >
               {REGIONS.map((region, index) => (
-                <li
-                  key={index}
-                  // className={`${
-                  //   theme
-                  //     ? "bg-gray-800 text-white"
-                  //     : "bg-white text-black"
-                  // }`}
-                >
-                  <a onClick={() => handleRegion(region)}>{region}</a>
+                <li key={index}>
+                  <a
+                    className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
+                    onClick={() => handleRegion(region)}
+                  >
+                    {region}
+                  </a>
                 </li>
               ))}
             </ul>

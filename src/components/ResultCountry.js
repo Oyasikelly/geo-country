@@ -5,7 +5,6 @@ import BorderCountries from "./BorderCountries";
 
 export default function ResultCountry({ theme2, country }) {
   const [testCountry, notUsefull, ...others] = country;
-  console.log(testCountry);
   const {
     borders,
     flags,
@@ -18,31 +17,29 @@ export default function ResultCountry({ theme2, country }) {
     currencies,
     languages,
   } = testCountry;
-  // console.log(
-  //   Object.values(name.nativeName)[0]?.common,
-  //   population,
-  //   region,
-  //   subregion,
-  //   capital[0],
-  //   tld[0],
-  //   currencies,
-  //   languages.eng
-  // );
+
   return (
     <div
       className={`${
         theme2 ? "bg-gray-800 text-white" : "bg-white text-black"
-      } hero  pb-[10rem] overflow-hidden`}
+      } hero pb-16 `}
     >
-      <div className="hero-content gap-[6rem] flex-col lg:flex-row w-auto">
+      <div
+        className="hero-content flex flex-col lg:flex-row gap-6 
+                   w-3/4 px-4 sm:px-6 lg:px-8 shadow-2xl sm:mt-10"
+      >
+        {/* Country Flag */}
         <img
           src={`${Object.values(flags)[0]}`}
           alt="country flag"
-          className="w-1/2 rounded-lg shadow-2xl"
+          className="w-full lg:w-1/2 rounded-lg shadow-2xl"
         />
-        <div className="w-1/2">
-          <h1 className="text-3xl font-bold">{name.common}</h1>
-          <div className="py-6 flex justify-between gap-10 w-full">
+
+        {/* Country Details */}
+        <div className="w-full lg:w-1/2">
+          <h1 className="text-2xl lg:text-3xl font-bold">{name.common}</h1>
+          <div className="py-6 flex flex-col lg:flex-row gap-6">
+            {/* First Column */}
             <ul>
               <li>
                 <span className="font-medium mr-2">Native Name:</span>
@@ -67,33 +64,36 @@ export default function ResultCountry({ theme2, country }) {
                 <span className="text-gray-500">{capital[0]}</span>
               </li>
             </ul>
+
+            {/* Second Column */}
             <ul>
               <li>
-                <span className="font-medium mr-2 ">Top Level Domain:</span>
+                <span className="font-medium mr-2">Top Level Domain:</span>
                 <span className="text-gray-500">{tld[0]}</span>
               </li>
               <li>
-                <span className="font-medium mr-2">Currenies:</span>
+                <span className="font-medium mr-2">Currencies:</span>
                 <span className="text-gray-500">
                   {Object.keys(currencies)[0]}
                 </span>
               </li>
               <li>
-                <span className="font-medium mr-2 ">Languages:</span>
+                <span className="font-medium mr-2">Languages:</span>
                 <span className="text-gray-500">
-                  {Object.values(languages)
-                    .map((entry) => entry)
-                    .join(",")}
-                  {/* {Object.keys(languages)[0]} */}
+                  {Object.values(languages).join(", ")}
                 </span>
               </li>
             </ul>
           </div>
-          <div className="flex items-center">
+
+          {/* Border Countries */}
+          <div className="flex flex-col lg:flex-row items-start gap-4">
             <span className="font-medium">Border Countries:</span>
-            <div>
+            <div className="flex flex-wrap gap-2">
               {borders.map((border, i) => (
-                <BorderCountries theme2={theme2}>{border}</BorderCountries>
+                <BorderCountries key={i} theme2={theme2}>
+                  {border}
+                </BorderCountries>
               ))}
             </div>
           </div>
