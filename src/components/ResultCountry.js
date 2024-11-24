@@ -92,7 +92,7 @@ function CountryFetched({ country, handleBorders, theme2 }) {
     >
       <div
         className="hero-content flex flex-col lg:flex-row gap-6 
-               w-3/4 px-4 sm:px-6 lg:px-8 shadow-2xl sm:mt-10"
+               w-auto px-4 sm:px-6 lg:px-8 shadow-2xl sm:mt-10"
       >
         {/* Country Flag */}
         <img
