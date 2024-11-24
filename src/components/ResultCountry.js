@@ -4,6 +4,73 @@ import React, { useState } from "react";
 import BorderCountries from "./BorderCountries";
 
 export default function ResultCountry({ theme2, country }) {
+  const [borderClicked, setBorderClicked] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [neighbourCountry, setNeighbourCountry] = useState("N");
+
+  async function fetchNeighbourCountry(name) {
+    const apiUrl = `https://restcountries.com/v3.1/alpha/${name}`;
+
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const neightbourcountry = await response.json();
+
+      console.log(neightbourcountry);
+      setNeighbourCountry(neightbourcountry);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+  function handleBorders(borderName) {
+    setBorderClicked(true);
+    fetchNeighbourCountry(borderName);
+    console.log("Border is Working!", borderName);
+  }
+  return (
+    <>
+      {loading && (
+        <div className="flex justify-center items-center py-6">
+          <p className="text-lg font-medium animate-pulse">
+            Loading Country Data...
+          </p>
+        </div>
+      )}
+      {error && (
+        <div className="flex justify-center items-center py-6">
+          <p className="text-lg font-medium text-red-500">
+            Error: {error}. Please try again.
+          </p>
+        </div>
+      )}
+      {!loading && !error && borderClicked && (
+        <CountryFetched
+          handleBorders={handleBorders}
+          country={neighbourCountry}
+          theme2={theme2}
+        />
+      )}
+
+      {!borderClicked && (
+        <CountryFetched
+          handleBorders={handleBorders}
+          country={country}
+          theme2={theme2}
+        />
+      )}
+    </>
+  );
+}
+
+function CountryFetched({ country, handleBorders, theme2 }) {
   const [testCountry, notUsefull, ...others] = country;
   const {
     borders,
@@ -17,16 +84,15 @@ export default function ResultCountry({ theme2, country }) {
     currencies,
     languages,
   } = testCountry;
-
   return (
     <div
       className={`${
         theme2 ? "bg-gray-800 text-white" : "bg-white text-black"
-      } hero pb-16 `}
+      } hero pb-16 rounded`}
     >
       <div
         className="hero-content flex flex-col lg:flex-row gap-6 
-                   w-3/4 px-4 sm:px-6 lg:px-8 shadow-2xl sm:mt-10"
+               w-3/4 px-4 sm:px-6 lg:px-8 shadow-2xl sm:mt-10"
       >
         {/* Country Flag */}
         <img
@@ -91,7 +157,11 @@ export default function ResultCountry({ theme2, country }) {
             <span className="font-medium">Border Countries:</span>
             <div className="flex flex-wrap gap-2">
               {borders.map((border, i) => (
-                <BorderCountries key={i} theme2={theme2}>
+                <BorderCountries
+                  onHandleBorder={handleBorders}
+                  key={i}
+                  theme2={theme2}
+                >
                   {border}
                 </BorderCountries>
               ))}

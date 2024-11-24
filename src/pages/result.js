@@ -39,7 +39,7 @@ export default function Result() {
         {/* Back Button */}
         <button
           onClick={navigateToHome}
-          className={`self-start lg:mt-20 sm:mt-20 flex items-center gap-2 px-4 py-2 rounded-md shadow-md${
+          className={`self-start lg:mt-20 mt-[3.5rem] flex items-center gap-2 px-4 py-2 rounded-md shadow-md${
             theme2
               ? "bg-gray-700 text-white hover:bg-gray-600"
               : "bg-gray-200 text-black hover:bg-gray-300"
