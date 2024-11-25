@@ -62,8 +62,8 @@ export default function Home({ theme, setTheme }) {
         )}
         {error && (
           <div className="flex justify-center items-center py-6">
-            <p className="text-lg font-medium text-red-500">
-              Error: {error}. Please try again.
+            <p className="text-lg font-medium text-gray-500">
+              {error}. Please try again.
             </p>
           </div>
         )}

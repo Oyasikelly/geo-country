@@ -80,7 +80,7 @@ export default function Search({
 
       setCountries(countries);
     } catch (err) {
-      setError(err.message);
+      setError("Invalid Search");
     } finally {
       setLoading(false);
     }
