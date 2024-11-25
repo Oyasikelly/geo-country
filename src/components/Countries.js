@@ -34,7 +34,7 @@ export default function Countries({
       {/* Other content */}
 
       <p className=" w-auto text-gray-300 self-center text-center mt-1 pb-4 z-1">
-        Search country by Region, cca3, cca3, country name. Remember to click
+        Search country by Region, cca2, cca3, country name. Remember to click
         your desired country, in other to reveal country info
       </p>
       {countries.length > 1 && (
