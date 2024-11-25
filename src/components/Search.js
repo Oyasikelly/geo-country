@@ -124,7 +124,7 @@ export default function Search({
         onClick={() => handleFetchCountry(userInput)}
         className={`${
           theme ? "bg-gray-600 text-white" : "bg-white text-black"
-        } btn shadow bg-white self-center lg:w-auto w-1/4`}
+        } btn shadow border-none self-center lg:w-auto w-1/4`}
       >
         Search
       </button>

@@ -177,7 +177,7 @@ function CountryFetched({ country, handleBorders, theme2 }) {
           </div>
           <div>
             <a className="link link-hover text-gray-500" href={wikiUrl}>
-              click to see more about {name.common}
+              Click to see more about {name.common}
             </a>
           </div>
         </div>
