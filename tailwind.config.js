@@ -19,6 +19,15 @@ module.exports = {
       zIndex: {
         1: "1",
       },
+      animation: {
+        spinEarth: "spinEarth 10s linear infinite",
+      },
+      keyframes: {
+        spinEarth: {
+          from: { transform: "translate(-50%, -50%) rotate(0deg)" },
+          to: { transform: "translate(-50%, -50%) rotate(360deg)" },
+        },
+      },
     },
   },
 };

@@ -11,10 +11,25 @@ export default function Countries({
   console.log(countries.length);
 
   return (
-    <div className="w-full">
+    <div className="relative h-screen overflow-scroll scrollbar-none w-full">
+      <div
+        className="
+    absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+    bg-cover bg-no-repeat rounded-full animate-spinEarth 
+    w-40 h-40   /* Default size for small screens */
+    sm:w-48 sm:h-48 /* Medium size for small screens */
+    md:w-64 md:h-64 /* Larger size for tablets */
+    lg:w-80 lg:h-80 /* Larger size for desktops */
+    xl:w-96 xl:h-96 /* Largest size for large desktops */
+  "
+        style={{ backgroundImage: "url('/earth-texture.png')" }}
+      ></div>
+
+      {/* Other content */}
+
       <p className="w-auto text-gray-300 self-center text-center mt-4 pb-4">
         Search country by Region, cca3, cca3, country name. Remember to click
-        your desired country, in other to reveal the country info
+        your desired country, in other to reveal country info
       </p>
       {countries.length > 1 && (
         <p className="text-gray-500 pb-4">
