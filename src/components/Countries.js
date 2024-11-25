@@ -14,7 +14,7 @@ export default function Countries({
     <div className="relative h-screen overflow-scroll scrollbar-none w-full">
       <div
         className="
-    absolute lg:top-[30%] lg:left-[50%] top-[15%] left-[50%] transform -translate-x-1/2 -translate-y-1/2
+    absolute  top-[30%] left-[50%] transform -translate-x-1/2 -translate-y-1/2
     bg-cover bg-no-repeat rounded-full animate-spinEarth 
     w-40 h-40   /* Default size for small screens */
     sm:w-48 sm:h-48 /* Medium size for small screens */
@@ -28,7 +28,7 @@ export default function Countries({
 
       {/* Other content */}
 
-      <p className="z-11 w-auto text-gray-300 self-center text-center mt-1 lg:mt-2 pb-4">
+      <p className=" w-auto text-gray-300 self-center text-center mt-1 lg:mt-4 pb-4 z-11">
         Search country by Region, cca3, cca3, country name. Remember to click
         your desired country, in other to reveal country info
       </p>
