@@ -12,6 +12,7 @@ export default function Result() {
 
   // Parse country data from query parameters
   const parsedCountryData = countryData ? JSON.parse(countryData) : null;
+  console.log(parsedCountryData);
 
   // Local state to manage theme
   const [theme2, setTheme2] = useState(theme);

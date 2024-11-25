@@ -3,15 +3,66 @@
 import React, { useState, useEffect } from "react";
 import { useCountries } from "@/context/CountriesContext";
 
-export const REGIONS = ["Africa", "America", "Asia", "Europe", "Oceania"];
+export const REGIONS_SEMICASE = [
+  "Africa",
+  "America",
+  "Asia",
+  "Europe",
+  "Oceania",
+];
+export const REGIONS_UPPERCASE = [
+  "AFRICA",
+  "AMERICA",
+  "ASIA",
+  "EUROPE",
+  "OCEANIA",
+];
+export const REGIONS_LOWERCASE = [
+  "africa",
+  "america",
+  "asia",
+  "europe",
+  "oceania",
+];
 
-export default function Search({ setLoading, setError, theme }) {
+export default function Search({
+  setLoading,
+  setError,
+  theme,
+  userInput,
+  setUserInput,
+  setCountryName,
+}) {
   const { setCountries } = useCountries();
-  const [inputCountry, setInputCountry] = useState("");
 
-  async function fetchCountryRegions(region) {
-    const apiUrl = `https://restcountries.com/v3.1/region/${region}`;
-
+  async function fetchCountries(userInput) {
+    let apiUrl = "";
+    if (REGIONS_SEMICASE.includes(userInput)) {
+      apiUrl =
+        userInput !== "" &&
+        `https://restcountries.com/v3.1/region/${userInput}`;
+    } else if (REGIONS_SEMICASE.includes(userInput)) {
+      apiUrl =
+        userInput !== "" &&
+        `https://restcountries.com/v3.1/region/${userInput}`;
+    } else if (REGIONS_LOWERCASE.includes(userInput)) {
+      apiUrl =
+        userInput !== "" &&
+        `https://restcountries.com/v3.1/region/${userInput}`;
+    } else if (REGIONS_UPPERCASE.includes(userInput)) {
+      apiUrl =
+        userInput !== "" &&
+        `https://restcountries.com/v3.1/region/${userInput}`;
+    } else if (userInput.length === 3 && /[a-zA-Z]+$/.test(userInput)) {
+      apiUrl =
+        userInput !== "" && `https://restcountries.com/v3.1/alpha/${userInput}`;
+    } else if (userInput.length === 2 && /[a-zA-Z]+$/.test(userInput)) {
+      apiUrl =
+        userInput !== "" && `https://restcountries.com/v3.1/alpha/${userInput}`;
+    } else {
+      apiUrl =
+        userInput !== "" && `https://restcountries.com/v3.1/name/${userInput}`;
+    }
     setLoading(true);
     setError(null);
     try {
@@ -21,13 +72,13 @@ export default function Search({ setLoading, setError, theme }) {
       }
 
       const countries = await response.json();
-      const country = countries.filter(
-        (country) =>
-          country.altSpellings.includes(inputCountry) ||
-          country.name.common === inputCountry
-      );
+      // const country = countries.filter(
+      //   (country) =>
+      //     country.altSpellings.includes(userInput) ||
+      //     country.name.common === userInput
+      // );
 
-      setCountries(country);
+      setCountries(countries);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -35,17 +86,22 @@ export default function Search({ setLoading, setError, theme }) {
     }
   }
 
-  function handleRegion(region) {
-    fetchCountryRegions(region);
+  // function handleRegion(region) {
+  //   fetchCountryRegions(region);
+  // }
+
+  function handleFetchCountry() {
+    fetchCountries(userInput);
+    setCountryName(userInput);
   }
 
   function handleInput(e) {
-    setInputCountry(() => e.target.value);
+    setUserInput(() => e.target.value);
   }
 
   return (
     <div
-      className="layout pt-24 flex flex-col sm:flex-row 
+      className="layout pt-24 pb-6 flex flex-col sm:flex-row 
                  sm:justify-between gap-4 px-4 sm:px-6 lg:px-8"
     >
       {/* Search Input */}
@@ -58,13 +114,21 @@ export default function Search({ setLoading, setError, theme }) {
           type="text"
           className="grow bg-transparent outline-none"
           placeholder="Search for a country..."
-          value={inputCountry}
+          value={userInput}
           onChange={handleInput}
         />
       </label>
 
       {/* Region Filter */}
-      <ul
+      <button
+        onClick={() => handleFetchCountry(userInput)}
+        className={`${
+          theme ? "bg-gray-600 text-white" : "bg-white text-black"
+        } btn shadow bg-white self-center lg:w-auto w-1/4`}
+      >
+        Search
+      </button>
+      {/* <ul
         className={`${
           theme ? "bg-gray-600 text-white" : "bg-base-100 text-black"
         } menu rounded shadow-md h-auto w-full sm:w-auto`}
@@ -90,7 +154,7 @@ export default function Search({ setLoading, setError, theme }) {
             </ul>
           </details>
         </li>
-      </ul>
+      </ul> */}
     </div>
   );
 }

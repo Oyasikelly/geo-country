@@ -14,11 +14,14 @@ export default function Home({ theme, setTheme }) {
 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [userInput, setUserInput] = useState("");
+  const [countryName, setCountryName] = useState("");
 
-  function navigateToResults() {
+  function navigateToResults(country) {
+    console.log(country);
     router.push({
       pathname: "/result",
-      query: { setTheme, theme, countryData: JSON.stringify(countries) },
+      query: { setTheme, theme, countryData: JSON.stringify(country) },
     });
   }
 
@@ -26,7 +29,7 @@ export default function Home({ theme, setTheme }) {
     <div
       className={`${
         theme ? "bg-gray-800 text-white" : "bg-white text-black"
-      } min-h-screen flex flex-col`}
+      } min-h-screen flex flex-col `}
     >
       {/* Head Section for Metadata */}
       <Head>
@@ -42,6 +45,9 @@ export default function Home({ theme, setTheme }) {
         loading={loading}
         setLoading={setLoading}
         theme={theme}
+        userInput={userInput}
+        setUserInput={setUserInput}
+        setCountryName={setCountryName}
       />
 
       {/* Main Layout Section */}
@@ -66,6 +72,7 @@ export default function Home({ theme, setTheme }) {
             countries={countries}
             navigateToResults={navigateToResults}
             theme={theme}
+            countryName={countryName}
           />
         )}
       </Layout>

@@ -10,7 +10,7 @@ export default function Layout({ theme, setTheme, children }) {
 
       {/* Main Content Area */}
       <main
-        className="layout py-6 h-screen overflow-auto scrollbar-hide 
+        className="layout py-6 h-screen overflow-auto scrollbar-none
                    flex flex-col items-center px-4 sm:px-6"
       >
         {children}

@@ -8,7 +8,6 @@ export default function ResultCountry({ theme2, country }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [neighbourCountry, setNeighbourCountry] = useState("N");
-
   async function fetchNeighbourCountry(name) {
     const apiUrl = `https://restcountries.com/v3.1/alpha/${name}`;
 
@@ -46,7 +45,7 @@ export default function ResultCountry({ theme2, country }) {
       )}
       {error && (
         <div className="flex justify-center items-center py-6">
-          <p className="text-lg font-medium text-red-500">
+          <p className="text-lg font-medium text-gray-500">
             Error: {error}. Please try again.
           </p>
         </div>
@@ -71,7 +70,8 @@ export default function ResultCountry({ theme2, country }) {
 }
 
 function CountryFetched({ country, handleBorders, theme2 }) {
-  const [testCountry, notUsefull, ...others] = country;
+  const [usefull, notUseful, ...other] = country;
+  console.log(usefull);
   const {
     borders,
     flags,
@@ -83,7 +83,12 @@ function CountryFetched({ country, handleBorders, theme2 }) {
     tld,
     currencies,
     languages,
-  } = testCountry;
+  } = usefull;
+
+  const wikiUrl = `https://en.wikipedia.org/wiki/${encodeURIComponent(
+    name.common
+  )}`;
+
   return (
     <div
       className={`${
@@ -156,7 +161,10 @@ function CountryFetched({ country, handleBorders, theme2 }) {
           <div className="flex flex-col lg:flex-row items-start gap-4">
             <span className="font-medium">Border Countries:</span>
             <div className="flex flex-wrap gap-2">
-              {borders.map((border, i) => (
+              {borders === undefined && (
+                <p className="text-gray-500">No border country</p>
+              )}
+              {borders?.map((border, i) => (
                 <BorderCountries
                   onHandleBorder={handleBorders}
                   key={i}
@@ -166,6 +174,11 @@ function CountryFetched({ country, handleBorders, theme2 }) {
                 </BorderCountries>
               ))}
             </div>
+          </div>
+          <div>
+            <a className="link link-hover text-gray-500" href={wikiUrl}>
+              click to see more about {name.common}
+            </a>
           </div>
         </div>
       </div>
