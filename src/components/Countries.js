@@ -13,7 +13,8 @@ export default function Countries({
   return (
     <div className="w-full">
       <p className="w-auto text-gray-300 self-center text-center mt-4 pb-4">
-        Search country by Region, cca3, cca3, country name
+        Search country by Region, cca3, cca3, country name. Remember to click
+        your desired country, in other to reveal the country info
       </p>
       {countries.length > 1 && (
         <p className="text-gray-500 pb-4">
