@@ -1,7 +1,7 @@
 /** @format */
 
 import { useState } from "react";
-
+import { motion } from "framer-motion";
 export default function Countries({
   theme,
   navigateToResults,
@@ -71,20 +71,24 @@ export default function Countries({
 function CountryCard({ theme, navigateToResults, loadedCountry }) {
   const { flags, name, population, region, capital, continents } =
     loadedCountry;
-  console.log(loadedCountry);
 
   function handleNavigation(loadedCountry) {
-    const clickedCountry = new Array(loadedCountry).filter(
+    const clickedCountry = [loadedCountry].filter(
       (country) => country.name === name
     );
     navigateToResults(clickedCountry);
   }
+
   return (
-    <div
+    <motion.div
       onClick={() => handleNavigation(loadedCountry)}
       className={`${
         theme ? "bg-gray-600 text-white" : "bg-base-100 text-black"
       } card w-auto shadow-xl mx-auto mb-6 max-w-sm md:max-w-sm cursor-pointer transform transition-transform duration-300 hover:translate-y-4`}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
     >
       <figure className="overflow-hidden">
         <img
@@ -112,6 +116,6 @@ function CountryCard({ theme, navigateToResults, loadedCountry }) {
           <span className="text-gray-400">{capital ? capital[0] : "N/A"}</span>
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 }
